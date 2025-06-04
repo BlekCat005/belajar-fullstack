@@ -12,7 +12,6 @@ const startServer = async () => {
   } catch (error) {
     // (6) Ubah pesan log error jika perlu
     return Promise.reject("Gagal terhubung ke database");
-    process.exit(1);
   }
 };
 
