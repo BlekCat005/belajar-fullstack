@@ -14,6 +14,10 @@ const doc = {
       url: "http://localhost:3000/api", //
       description: "Local Server", //
     },
+    {
+      url: "https://belajar-fullstack-be.vercel.app/api", //
+      description: "Deployed Server", //
+    },
   ],
   components: {
     //
