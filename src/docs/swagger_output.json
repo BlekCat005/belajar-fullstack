@@ -96,7 +96,7 @@
       "RegisterRequest": {
         "type": "object",
         "properties": {
-          "fullName": {
+          "fullname": {
             "type": "string",
             "example": "member2025"
           },
@@ -109,10 +109,6 @@
             "example": "member2025@yopmail.com"
           },
           "password": {
-            "type": "string",
-            "example": "Member2025!"
-          },
-          "confirmPassword": {
             "type": "string",
             "example": "Member2025!"
           }

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
-import { encrypt } from "../utils/encryption";
-import * as Yup from "yup";
+import { encrypt } from "../utils/encryption"; //
+import * as Yup from "yup"; //
 
+// Validasi password tetap sama
 const validatePassword = Yup.string()
   .required()
-  .min(8, "Password must be at least 8 characters")
+  .min(8, "Password must be at least 8 characters") //
   .test(
     "at-least-one-number",
     "Password must contain at least one number",
@@ -17,43 +18,48 @@ const validatePassword = Yup.string()
 
 export const USER_MODEL_NAME = "User";
 
+// Skema validasi untuk login tetap sama
 export const userLoginDTO = Yup.object({
   identifier: Yup.string().required(),
   password: validatePassword,
 });
 
+// Skema validasi untuk registrasi (hanya fullName, username, email, password)
 export const userDTO = Yup.object({
-  fullName: Yup.string().required(),
-  email: Yup.string().email().required(),
-  password: validatePassword,
-});
+  fullname: Yup.string().required(), //
+  username: Yup.string().required(),
+  email: Yup.string().email().required(), //
+  password: validatePassword, //
+}); //
 
-export type TypeUser = Yup.InferType<typeof userDTO>;
+export type TypeUser = Yup.InferType<typeof userDTO>; //
 
-export interface User extends Omit<TypeUser, "confirmPassword"> {
-  isActive: boolean;
-  activationCode: string;
-  role: string;
-  profilePicture: string;
+// Interface User disederhanakan
+export interface User extends TypeUser {
   createdAt?: string;
 }
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema; //
 
 const UserSchema = new Schema<User>(
   {
-    fullName: {
-      type: Schema.Types.String,
-      required: true,
+    fullname: {
+      type: Schema.Types.String, //
+      required: true, //
     },
-    email: {
+    username: {
       type: Schema.Types.String,
       required: true,
       unique: true,
     },
+    email: {
+      type: Schema.Types.String, //
+      required: true, //
+      unique: true, //
+    },
     password: {
-      type: Schema.Types.String,
-      required: true,
+      type: Schema.Types.String, //
+      required: true, //
     },
   },
   {
@@ -63,15 +69,16 @@ const UserSchema = new Schema<User>(
 
 UserSchema.pre("save", function (next) {
   const user = this;
-  user.password = encrypt(user.password);
-  user.activationCode = encrypt(user.id);
+  if (user.isModified("password") || user.isNew) {
+    user.password = encrypt(user.password);
+  }
   next();
 });
 
 UserSchema.methods.toJSON = function () {
+  //
   const user = this.toObject();
   delete user.password;
-  delete user.activationCode;
   return user;
 };
 
