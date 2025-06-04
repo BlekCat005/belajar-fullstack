@@ -1,45 +1,80 @@
-import mongoose, { Schema, Document, model } from "mongoose";
-// import bcrypt from 'bcryptjs'; // Mungkin tidak perlu di sini jika tidak ada pre-save
+import mongoose from "mongoose";
+import { encrypt } from "../utils/encryption";
+import * as Yup from "yup";
 
-export interface IUser /* extends Document */ {
-  username: string;
-  email: string;
-  password_hash?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+const validatePassword = Yup.string()
+  .required()
+  .min(8, "Password must be at least 8 characters")
+  .test(
+    "at-least-one-number",
+    "Password must contain at least one number",
+    (value) => {
+      if (!value) return false;
+      const regex = /^(?=.*\d)/;
+      return regex.test(value);
+    }
+  );
+
+export const USER_MODEL_NAME = "User";
+
+export const userLoginDTO = Yup.object({
+  identifier: Yup.string().required(),
+  password: validatePassword,
+});
+
+export const userDTO = Yup.object({
+  fullName: Yup.string().required(),
+  email: Yup.string().email().required(),
+  password: validatePassword,
+});
+
+export type TypeUser = Yup.InferType<typeof userDTO>;
+
+export interface User extends Omit<TypeUser, "confirmPassword"> {
+  isActive: boolean;
+  activationCode: string;
+  role: string;
+  profilePicture: string;
+  createdAt?: string;
 }
 
-const UserSchema: Schema<IUser> = new Schema(
+const Schema = mongoose.Schema;
+
+const UserSchema = new Schema<User>(
   {
-    username: {
-      type: String,
-      required: [true, "Nama pengguna wajib diisi."], // Pesan error kustom
-      unique: true, // Setiap username harus unik
-      trim: true, // Menghapus spasi di awal dan akhir
-      minlength: [3, "Nama pengguna minimal 3 karakter."],
+    fullName: {
+      type: Schema.Types.String,
+      required: true,
     },
     email: {
-      type: String,
-      required: [true, "Email wajib diisi."],
+      type: Schema.Types.String,
+      required: true,
       unique: true,
-      trim: true,
-      lowercase: true, // Menyimpan email dalam huruf kecil untuk konsistensi
-      // Anda bisa menambahkan validasi format email menggunakan match:
-      // match: [/.+\@.+\..+/, 'Masukkan format email yang valid.']
     },
-    password_hash: {
-      type: String,
-      required: [true, "Password hash wajib diisi."],
-      // Sebaiknya tidak ada minlength di sini karena ini adalah hash
+    password: {
+      type: Schema.Types.String,
+      required: true,
     },
   },
   {
-    // 3. Opsi Skema
-    timestamps: true, // Otomatis membuat field createdAt dan updatedAt
-    versionKey: false, // Opsional: Menghilangkan field __v (versionKey)
-    collection: "users", // Opsional: Nama koleksi di MongoDB secara eksplisit
+    timestamps: true,
   }
 );
 
-const User = model<IUser>("User", UserSchema);
-export default User;
+UserSchema.pre("save", function (next) {
+  const user = this;
+  user.password = encrypt(user.password);
+  user.activationCode = encrypt(user.id);
+  next();
+});
+
+UserSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  delete user.activationCode;
+  return user;
+};
+
+const UserModel = mongoose.model(USER_MODEL_NAME, UserSchema);
+
+export default UserModel;

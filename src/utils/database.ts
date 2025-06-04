@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { MONGODB_URI } from "./env";
 
-export const startServer = async () => {
+const startServer = async () => {
   try {
     // (4) UNCOMMENT bagian koneksi MongoDB
     await mongoose.connect(MONGODB_URI);
@@ -15,3 +15,5 @@ export const startServer = async () => {
     process.exit(1);
   }
 };
+
+export default startServer;
