@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs"; // Untuk hashing password
 import User, { IUser } from "../models/User.model";
+import jwt from "jsonwebtoken";
+import { JWT_SECRET } from "../utils/env";
 
 interface GenericPostBody {
   [key: string]: any; // Terima objek JSON apapun
@@ -173,6 +175,26 @@ export const login = async (
       });
     }
 
+    // BARU: Pastikan JWT_SECRET ada
+    if (!JWT_SECRET) {
+      console.error("Error: JWT_SECRET tidak terdefinisi.");
+      return res.status(500).json({
+        success: false,
+        message: "Terjadi kesalahan konfigurasi pada server.",
+      });
+    }
+
+    // BARU: Siapkan payload untuk token
+    const payload = {
+      userId: user._id,
+      username: user.username,
+    };
+    const token = jwt.sign(
+      payload,
+      JWT_SECRET,
+      { expiresIn: "1h" } // Token akan kedaluwarsa dalam 1 jam
+    );
+
     // 4. Login Berhasil
     // TODO: Buat dan kirim JWT (JSON Web Token) di sini untuk sesi pengguna
 
@@ -184,10 +206,8 @@ export const login = async (
         _id: user._id,
         username: user.username,
         email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        // Jangan kirim token di sini jika belum diimplementasikan
       },
+      token: token, // BARU: Kirim token yang baru dibuat
     });
   } catch (error: any) {
     console.error("Error saat login:", error);
