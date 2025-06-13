@@ -14,8 +14,13 @@ router.post(
         content: {
             "application/json": {
                 schema: { $ref: '#/components/schemas/RegisterRequest' },
-                // Cukup panggil referensi contoh yang sudah kita buat
-                example: { $ref: '#/components/examples/RegisterExample' }
+                // PERBAIKAN: GANTI 'example' MENJADI 'examples' (jamak)
+                examples: {
+                    // Nama 'ContohRegister' ini akan muncul sebagai tab di UI Swagger
+                    ContohRegister: { 
+                       $ref: '#/components/examples/RegisterExample' 
+                    }
+                }
             }
         }
      }
@@ -31,8 +36,12 @@ router.post(
         content: {
             "application/json": {
                 schema: { $ref: '#/components/schemas/LoginRequest' },
-                // Panggil juga referensi untuk contoh login
-                example: { $ref: '#/components/examples/LoginExample' }
+                // GANTI INI JUGA MENJADI 'examples' (jamak)
+                examples: {
+                    ContohLogin: {
+                       $ref: '#/components/examples/LoginExample'
+                    }
+                }
             }
         }
      }
