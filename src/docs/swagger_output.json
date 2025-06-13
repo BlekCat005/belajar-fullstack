@@ -3,12 +3,16 @@
   "info": {
     "version": "v0.0.1",
     "title": "Dokumentasi API Fullstack Web",
-    "description": "Dokumentasi API Fullstack Web"
+    "description": "Dokumentasi API untuk proyek belajar fullstack web."
   },
   "servers": [
     {
       "url": "http://localhost:3000/api",
       "description": "Local Server"
+    },
+    {
+      "url": "https://belajar-fullstack-be.vercel.app/api",
+      "description": "Deployed Server"
     }
   ],
   "paths": {
@@ -73,20 +77,66 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "description": "Masukkan token JWT yang didapat setelah login"
       }
     },
     "schemas": {
       "LoginRequest": {
         "type": "object",
         "properties": {
-          "identifier": {
+          "type": {
             "type": "string",
-            "example": "user"
+            "example": "object"
           },
-          "password": {
-            "type": "string",
-            "example": "user1234"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Email pengguna yang terdaftar."
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  }
+                }
+              },
+              "password": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Password pengguna."
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          },
+          "required": {
+            "type": "array",
+            "example": [
+              "email",
+              "password"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
         },
         "xml": {
@@ -96,21 +146,78 @@
       "RegisterRequest": {
         "type": "object",
         "properties": {
-          "fullname": {
+          "type": {
             "type": "string",
-            "example": "member2025"
+            "example": "object"
           },
-          "username": {
-            "type": "string",
-            "example": "member2025"
+          "properties": {
+            "type": "object",
+            "properties": {
+              "fullname": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "Budi Santoso"
+                  }
+                }
+              },
+              "username": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "budisan"
+                  }
+                }
+              },
+              "email": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "budi@example.com"
+                  }
+                }
+              },
+              "password": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "example": {
+                    "type": "string",
+                    "example": "PasswordSuperAman123!"
+                  }
+                }
+              }
+            }
           },
-          "email": {
-            "type": "string",
-            "example": "member2025@yopmail.com"
-          },
-          "password": {
-            "type": "string",
-            "example": "Member2025!"
+          "required": {
+            "type": "array",
+            "example": [
+              "fullname",
+              "username",
+              "email",
+              "password"
+            ],
+            "items": {
+              "type": "string"
+            }
           }
         },
         "xml": {
