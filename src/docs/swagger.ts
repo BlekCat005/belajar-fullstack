@@ -44,47 +44,86 @@ const doc = {
           password: { type: "string" },
         },
       },
-      ItemRequest: {
+      CreateItemRequest: {
+        name: "Buku Tulis",
+        description: "Deskripsi Buku Tulis",
+        price: 10000,
+        stock: 1,
+        imageUrl: "",
+      },
+      Item: {
         type: "object",
         properties: {
+          _id: { type: "string" },
           name: { type: "string" },
           description: { type: "string" },
           price: { type: "number" },
           stock: { type: "number" },
           imageUrl: { type: "string" },
+          createdAt: { type: "string", format: "date-time" },
+          updatedAt: { type: "string", format: "date-time" },
         },
       },
     },
-    // ==========================================================
-    // INI BAGIAN BARU YANG KITA TAMBAHKAN
-    // ==========================================================
-    examples: {
-      RegisterExample: {
-        value: {
-          fullname: "Budi Santoso",
-          username: "budisan",
-          email: "budi@example.com",
-          password: "PasswordSuperAman123!",
-        },
-        summary: "Contoh payload untuk registrasi",
+    PaginationInfo: {
+      type: "object",
+      properties: {
+        total: { type: "number" },
+        totalPages: { type: "number" },
+        current: { type: "number" },
       },
-      LoginExample: {
-        value: {
-          email: "abcd",
-          password: "abcd1234",
+    },
+    PaginatedItemResponse: {
+      type: "object",
+      properties: {
+        meta: {
+          type: "object",
+          properties: {
+            status: { type: "number" },
+            message: { type: "string" },
+          },
         },
-        summary: "Contoh payload untuk login",
-      },
-      ItemExample: {
-        value: {
-          name: "Buku Tulis Sinar Dunia",
-          description: "Buku tulis 58 lembar berkualitas tinggi.",
-          price: 5000,
-          stock: 100,
-          imageUrl: "https://example.com/images/buku.jpg",
+        data: {
+          type: "array",
+          items: {
+            $ref: "#/components/schemas/Item",
+          },
         },
-        summary: "Contoh payload untuk data barang",
+        pagination: {
+          $ref: "#/components/schemas/PaginationInfo",
+        },
       },
+    },
+  },
+  // ==========================================================
+  // INI BAGIAN BARU YANG KITA TAMBAHKAN
+  // ==========================================================
+  examples: {
+    RegisterExample: {
+      value: {
+        fullname: "Budi Santoso",
+        username: "budisan",
+        email: "budi@example.com",
+        password: "PasswordSuperAman123!",
+      },
+      summary: "Contoh payload untuk registrasi",
+    },
+    LoginExample: {
+      value: {
+        email: "abcd",
+        password: "abcd1234",
+      },
+      summary: "Contoh payload untuk login",
+    },
+    ItemExample: {
+      value: {
+        name: "Buku Tulis Sinar Dunia",
+        description: "Buku tulis 58 lembar berkualitas tinggi.",
+        price: 5000,
+        stock: 100,
+        imageUrl: "https://example.com/images/buku.jpg",
+      },
+      summary: "Contoh payload untuk data barang",
     },
   },
 };

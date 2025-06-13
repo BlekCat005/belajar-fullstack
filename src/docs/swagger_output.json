@@ -97,7 +97,6 @@
         "tags": [
           "Items"
         ],
-        "summary": "Menambahkan barang baru",
         "description": "",
         "responses": {
           "default": {
@@ -106,7 +105,7 @@
         },
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": {}
           }
         ],
         "requestBody": {
@@ -114,12 +113,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ItemRequest"
-              },
-              "examples": {
-                "itemExample": {
-                  "$ref": "#/components/examples/ItemExample"
-                }
+                "$ref": "#/components/schemas/CreateItemRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateItemRequest"
               }
             }
           }
@@ -129,8 +128,30 @@
         "tags": [
           "Items"
         ],
-        "summary": "Mendapatkan semua daftar barang",
         "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -283,6 +304,9 @@
               }
             }
           }
+        },
+        "xml": {
+          "name": "LoginRequest"
         }
       },
       "RegisterRequest": {
@@ -333,9 +357,40 @@
               }
             }
           }
+        },
+        "xml": {
+          "name": "RegisterRequest"
         }
       },
-      "ItemRequest": {
+      "CreateItemRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Buku Tulis"
+          },
+          "description": {
+            "type": "string",
+            "example": "Deskripsi Buku Tulis"
+          },
+          "price": {
+            "type": "number",
+            "example": 10000
+          },
+          "stock": {
+            "type": "number",
+            "example": 1
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "xml": {
+          "name": "CreateItemRequest"
+        }
+      },
+      "Item": {
         "type": "object",
         "properties": {
           "type": {
@@ -345,6 +400,15 @@
           "properties": {
             "type": "object",
             "properties": {
+              "_id": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
               "name": {
                 "type": "object",
                 "properties": {
@@ -389,39 +453,107 @@
                     "example": "string"
                   }
                 }
+              },
+              "createdAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
+              },
+              "updatedAt": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "format": {
+                    "type": "string",
+                    "example": "date-time"
+                  }
+                }
               }
             }
           }
+        },
+        "xml": {
+          "name": "Item"
         }
       }
     },
-    "examples": {
-      "RegisterExample": {
-        "value": {
-          "fullname": "Budi Santoso",
-          "username": "budisan",
-          "email": "budi@example.com",
-          "password": "PasswordSuperAman123!"
+    "PaginationInfo": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "number"
         },
-        "summary": "Contoh payload untuk registrasi"
-      },
-      "LoginExample": {
-        "value": {
-          "email": "abcd",
-          "password": "abcd1234"
+        "totalPages": {
+          "type": "number"
         },
-        "summary": "Contoh payload untuk login"
-      },
-      "ItemExample": {
-        "value": {
-          "name": "Buku Tulis Sinar Dunia",
-          "description": "Buku tulis 58 lembar berkualitas tinggi.",
-          "price": 5000,
-          "stock": 100,
-          "imageUrl": "https://example.com/images/buku.jpg"
-        },
-        "summary": "Contoh payload untuk data barang"
+        "current": {
+          "type": "number"
+        }
       }
+    },
+    "PaginatedItemResponse": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "number"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Item"
+          }
+        },
+        "pagination": {
+          "$ref": "#/components/schemas/PaginationInfo"
+        }
+      }
+    }
+  },
+  "examples": {
+    "RegisterExample": {
+      "value": {
+        "fullname": "Budi Santoso",
+        "username": "budisan",
+        "email": "budi@example.com",
+        "password": "PasswordSuperAman123!"
+      },
+      "summary": "Contoh payload untuk registrasi"
+    },
+    "LoginExample": {
+      "value": {
+        "email": "abcd",
+        "password": "abcd1234"
+      },
+      "summary": "Contoh payload untuk login"
+    },
+    "ItemExample": {
+      "value": {
+        "name": "Buku Tulis Sinar Dunia",
+        "description": "Buku tulis 58 lembar berkualitas tinggi.",
+        "price": 5000,
+        "stock": 100,
+        "imageUrl": "https://example.com/images/buku.jpg"
+      },
+      "summary": "Contoh payload untuk data barang"
     }
   }
 }

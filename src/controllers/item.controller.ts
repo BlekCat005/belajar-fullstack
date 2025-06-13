@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import ItemModel, { itemDTO } from "../models/item.model";
+import ItemModel, { itemDTO, TypeItem } from "../models/item.model";
 import response from "../utils/response";
+import { IPaginationQuery } from "../utils/interfaces";
+import { FilterQuery } from "mongoose";
 
 export default {
   // Membuat barang baru
@@ -18,8 +20,39 @@ export default {
   // Mendapatkan semua barang
   async getAll(req: Request, res: Response) {
     try {
-      const items = await ItemModel.find();
-      response.success(res, items, "Berhasil mendapatkan semua barang");
+      const {
+        limit = 10,
+        page = 1,
+        search,
+      } = req.query as unknown as IPaginationQuery;
+
+      const query: FilterQuery<TypeItem> = {};
+
+      if (search) {
+        Object.assign(query, {
+          ...query,
+          $text: {
+            $search: search,
+          },
+        });
+      }
+      const result = await ItemModel.find(query)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .sort({ createdAt: -1 })
+        .exec();
+      const count = await ItemModel.countDocuments(query);
+
+      response.pagination(
+        res,
+        result,
+        {
+          total: count,
+          current: page,
+          totalPages: Math.ceil(count / limit),
+        },
+        "success find all banners"
+      );
     } catch (error) {
       response.error(res, error, "Gagal mendapatkan barang");
     }

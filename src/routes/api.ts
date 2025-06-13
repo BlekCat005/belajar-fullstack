@@ -62,29 +62,30 @@ router.get(
 router.post(
   "/items",
   authMiddleware,
-  itemController.create /* #swagger.tags = ['Items']
-    #swagger.summary = 'Menambahkan barang baru'
-    #swagger.security = [{"bearerAuth": []}]
-    #swagger.requestBody = {
-      required: true,
-      content: {
-        "application/json": {
-          schema: { $ref: '#/components/schemas/ItemRequest' },
-          examples: {
-            itemExample: { $ref: '#/components/examples/ItemExample' }
-          }
-        }
-      }
+  itemController.create
+  /*
+  #swagger.tags = ['Items']
+  #swagger.security = [{
+    "bearerAuth": {}
+  }]
+  #swagger.requestBody = {
+    required: true,
+    schema: {
+      $ref: "#/components/schemas/CreateItemRequest"
     }
+  }
   */
 );
 
 router.get(
   "/items",
   authMiddleware,
-  itemController.getAll /* #swagger.tags = ['Items']
-    #swagger.summary = 'Mendapatkan semua daftar barang'
-    #swagger.security = [{"bearerAuth": []}]
+  itemController.getAll
+  /* 
+    #swagger.tags = ['Items']
+    #swagger.security = [{
+      "bearerAuth": []
+    }]
   */
 );
 
