@@ -21,27 +21,14 @@
         "tags": [
           "Auth"
         ],
-        "description": "",
+        "summary": "Mendaftarkan Pengguna Baru",
+        "description": "Endpoint untuk membuat akun pengguna baru.",
         "responses": {
           "default": {
             "description": ""
           }
         },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterRequest"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterRequest"
-              }
-            }
-          }
-        }
+        "requestBody": {}
       }
     },
     "/auth/login": {
@@ -49,27 +36,14 @@
         "tags": [
           "Auth"
         ],
-        "description": "",
+        "summary": "Login Pengguna",
+        "description": "Endpoint untuk autentikasi dan mendapatkan token.",
         "responses": {
           "default": {
             "description": ""
           }
         },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
-          }
-        }
+        "requestBody": {}
       }
     }
   },
@@ -138,9 +112,6 @@
               "type": "string"
             }
           }
-        },
-        "xml": {
-          "name": "LoginRequest"
         }
       },
       "RegisterRequest": {
@@ -219,9 +190,6 @@
               "type": "string"
             }
           }
-        },
-        "xml": {
-          "name": "RegisterRequest"
         }
       }
     }
