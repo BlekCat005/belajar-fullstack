@@ -7,45 +7,42 @@ const router = express.Router();
 
 router.post(
   "/auth/register",
-  authController.register
-  /* #swagger.tags = ['Auth']
-     #swagger.summary = 'Mendaftarkan Pengguna Baru'
-     #swagger.requestBody = {
-        content: {
-            "application/json": {
-                schema: { $ref: '#/components/schemas/RegisterRequest' },
-                // PERBAIKAN: GANTI 'example' MENJADI 'examples' (jamak)
-                examples: {
-                    // Nama 'ContohRegister' ini akan muncul sebagai tab di UI Swagger
-                    ContohRegister: { 
-                       $ref: '#/components/examples/RegisterExample' 
-                    }
-                }
-            }
-        }
-     }
-  */
+  authController.register /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Mendaftarkan Pengguna Baru'
+     #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: { $ref: '#/components/schemas/RegisterRequest' },
+                example: {
+                    fullname: "Budi Santoso",
+                    username: "budisan",
+                    email: "budi@example.com",
+                    password: "PasswordSuperAman123!"
+                }
+            }
+        }
+     }
+  */
 );
 
 router.post(
   "/auth/login",
-  authController.login
-  /* #swagger.tags = ['Auth']
-     #swagger.summary = 'Login Pengguna'
-     #swagger.requestBody = {
-        content: {
-            "application/json": {
-                schema: { $ref: '#/components/schemas/LoginRequest' },
-                // GANTI INI JUGA MENJADI 'examples' (jamak)
-                examples: {
-                    ContohLogin: {
-                       $ref: '#/components/examples/LoginExample'
-                    }
-                }
-            }
-        }
-     }
-  */
+  authController.login /* #swagger.tags = ['Auth']
+     #swagger.summary = 'Login Pengguna'
+     #swagger.requestBody = {
+        required: true,
+        content: {
+            "application/json": {
+                schema: { $ref: '#/components/schemas/LoginRequest' },
+                example: {
+                    email: "budi@example.com",
+                    password: "PasswordSuperAman123!"
+                }
+            }
+        }
+     }
+  */
 );
 
 export default router;

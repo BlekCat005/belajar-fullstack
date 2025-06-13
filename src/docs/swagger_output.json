@@ -23,7 +23,22 @@
             "description": ""
           }
         },
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              },
+              "example": {
+                "fullname": "Budi Santoso",
+                "username": "budisan",
+                "email": "budi@example.com",
+                "password": "PasswordSuperAman123!"
+              }
+            }
+          }
+        }
       }
     },
     "/auth/login": {
@@ -38,7 +53,20 @@
             "description": ""
           }
         },
-        "requestBody": {}
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              },
+              "example": {
+                "email": "budi@example.com",
+                "password": "PasswordSuperAman123!"
+              }
+            }
+          }
+        }
       }
     }
   },

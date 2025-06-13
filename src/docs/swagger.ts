@@ -41,7 +41,6 @@ const doc = {
     // ==========================================================
     examples: {
       RegisterExample: {
-        // Nama contoh untuk registrasi
         value: {
           fullname: "Budi Santoso",
           username: "budisan",
@@ -51,7 +50,6 @@ const doc = {
         summary: "Contoh payload untuk registrasi",
       },
       LoginExample: {
-        // Nama contoh untuk login
         value: {
           email: "budi@example.com",
           password: "PasswordSuperAman123!",
