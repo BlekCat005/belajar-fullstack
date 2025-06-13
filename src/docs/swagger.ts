@@ -44,6 +44,16 @@ const doc = {
           password: { type: "string" },
         },
       },
+      ItemRequest: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          description: { type: "string" },
+          price: { type: "number" },
+          stock: { type: "number" },
+          imageUrl: { type: "string" },
+        },
+      },
     },
     // ==========================================================
     // INI BAGIAN BARU YANG KITA TAMBAHKAN
@@ -60,10 +70,20 @@ const doc = {
       },
       LoginExample: {
         value: {
-          email: "budi@example.com",
-          password: "PasswordSuperAman123!",
+          email: "abcd",
+          password: "abcd1234",
         },
         summary: "Contoh payload untuk login",
+      },
+      ItemExample: {
+        value: {
+          name: "Buku Tulis Sinar Dunia",
+          description: "Buku tulis 58 lembar berkualitas tinggi.",
+          price: 5000,
+          stock: 100,
+          imageUrl: "https://example.com/images/buku.jpg",
+        },
+        summary: "Contoh payload untuk data barang",
       },
     },
   },

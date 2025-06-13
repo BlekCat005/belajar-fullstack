@@ -66,8 +66,8 @@
                 "$ref": "#/components/schemas/LoginRequest"
               },
               "example": {
-                "identifier": "budi@example.com",
-                "password": "PasswordSuperAman123!"
+                "identifier": "abcd",
+                "password": "abcd1234"
               }
             }
           }
@@ -88,6 +88,158 @@
         "security": [
           {
             "bearerAuth": {}
+          }
+        ]
+      }
+    },
+    "/items": {
+      "post": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Menambahkan barang baru",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemRequest"
+              },
+              "examples": {
+                "itemExample": {
+                  "$ref": "#/components/examples/ItemExample"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Mendapatkan semua daftar barang",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/items/{id}": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Mendapatkan detail satu barang",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID unik dari barang."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Memperbarui data barang",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID unik dari barang."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ItemRequest"
+              },
+              "examples": {
+                "itemExample": {
+                  "$ref": "#/components/examples/ItemExample"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Items"
+        ],
+        "summary": "Menghapus barang",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID unik dari barang."
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
           }
         ]
       }
@@ -182,6 +334,65 @@
             }
           }
         }
+      },
+      "ItemRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "example": "object"
+          },
+          "properties": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "description": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  }
+                }
+              },
+              "stock": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "number"
+                  }
+                }
+              },
+              "imageUrl": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "examples": {
@@ -196,10 +407,20 @@
       },
       "LoginExample": {
         "value": {
-          "email": "budi@example.com",
-          "password": "PasswordSuperAman123!"
+          "email": "abcd",
+          "password": "abcd1234"
         },
         "summary": "Contoh payload untuk login"
+      },
+      "ItemExample": {
+        "value": {
+          "name": "Buku Tulis Sinar Dunia",
+          "description": "Buku tulis 58 lembar berkualitas tinggi.",
+          "price": 5000,
+          "stock": 100,
+          "imageUrl": "https://example.com/images/buku.jpg"
+        },
+        "summary": "Contoh payload untuk data barang"
       }
     }
   }

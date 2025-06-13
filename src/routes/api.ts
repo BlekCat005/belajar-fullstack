@@ -3,6 +3,7 @@
 import express from "express";
 import authController from "../controllers/auth.controller";
 import authMiddleware from "../middlewares/auth.middleware";
+import itemController from "../controllers/item.controller";
 
 const router = express.Router();
 
@@ -37,8 +38,8 @@ router.post(
             "application/json": {
                 schema: { $ref: '#/components/schemas/LoginRequest' },
                 example: {
-                    identifier: "budi@example.com",
-                    password: "PasswordSuperAman123!"
+                    identifier: "abcd",
+                    password: "abcd1234"
                 }
             }
         }
@@ -55,6 +56,76 @@ router.get(
   #swagger.security = [{
     "bearerAuth": {}
   }]
+  */
+);
+
+router.post(
+  "/items",
+  authMiddleware,
+  itemController.create /* #swagger.tags = ['Items']
+    #swagger.summary = 'Menambahkan barang baru'
+    #swagger.security = [{"bearerAuth": []}]
+    #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+          schema: { $ref: '#/components/schemas/ItemRequest' },
+          examples: {
+            itemExample: { $ref: '#/components/examples/ItemExample' }
+          }
+        }
+      }
+    }
+  */
+);
+
+router.get(
+  "/items",
+  authMiddleware,
+  itemController.getAll /* #swagger.tags = ['Items']
+    #swagger.summary = 'Mendapatkan semua daftar barang'
+    #swagger.security = [{"bearerAuth": []}]
+  */
+);
+
+router.get(
+  "/items/:id",
+  authMiddleware,
+  itemController.getById /* #swagger.tags = ['Items']
+    #swagger.summary = 'Mendapatkan detail satu barang'
+    #swagger.security = [{"bearerAuth": []}]
+    #swagger.parameters['id'] = { description: 'ID unik dari barang.' }
+  */
+);
+
+router.put(
+  "/items/:id",
+  authMiddleware,
+  itemController.update /* #swagger.tags = ['Items']
+    #swagger.summary = 'Memperbarui data barang'
+    #swagger.security = [{"bearerAuth": []}]
+    #swagger.parameters['id'] = { description: 'ID unik dari barang.' }
+    #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+          schema: { $ref: '#/components/schemas/ItemRequest' },
+          examples: {
+            itemExample: { $ref: '#/components/examples/ItemExample' }
+          }
+        }
+      }
+    }
+  */
+);
+
+router.delete(
+  "/items/:id",
+  authMiddleware,
+  itemController.delete /* #swagger.tags = ['Items']
+    #swagger.summary = 'Menghapus barang'
+    #swagger.security = [{"bearerAuth": []}]
+    #swagger.parameters['id'] = { description: 'ID unik dari barang.' }
   */
 );
 
