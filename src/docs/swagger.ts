@@ -1,75 +1,68 @@
+// File swagger-generator.js atau yang sejenis
+
 import swaggerAutogen from "swagger-autogen";
 
 const doc = {
   info: {
-    version: "v0.0.1",
-    title: "Dokumentasi API Fullstack Web",
-    description: "Dokumentasi API untuk proyek belajar fullstack web.",
+    // ... (info tidak berubah)
   },
   servers: [
-    {
-      url: "http://localhost:3000/api", // Sesuaikan port jika berbeda
-      description: "Local Server",
-    },
-    {
-      url: "https://belajar-fullstack-be.vercel.app/api", // Pastikan ini URL backend-mu
-      description: "Deployed Server",
-    },
+    // ... (servers tidak berubah)
   ],
+  // Di dalam components, kita akan tambahkan blok "examples"
   components: {
     securitySchemes: {
       bearerAuth: {
         type: "http",
         scheme: "bearer",
-        description: "Masukkan token JWT yang didapat setelah login",
       },
     },
-    // Bagian ini yang kita perbaiki secara total
     schemas: {
+      // Skema tetap sama seperti yang sudah kita perbaiki
       LoginRequest: {
         type: "object",
         properties: {
-          email: {
-            type: "string",
-            description: "Email pengguna yang terdaftar.",
-            example: "user@example.com",
-          },
-          password: {
-            type: "string",
-            description: "Password pengguna.",
-            example: "password123",
-          },
+          email: { type: "string" },
+          password: { type: "string" },
         },
-        required: ["email", "password"], // Menandakan field ini wajib diisi
       },
       RegisterRequest: {
         type: "object",
         properties: {
-          fullname: {
-            type: "string",
-            example: "Budi Santoso",
-          },
-          username: {
-            type: "string",
-            example: "budisan",
-          },
-          email: {
-            type: "string",
-            example: "budi@example.com",
-          },
-          password: {
-            type: "string",
-            example: "PasswordSuperAman123!",
-          },
+          fullname: { type: "string" },
+          username: { type: "string" },
+          email: { type: "string" },
+          password: { type: "string" },
         },
-        required: ["fullname", "username", "email", "password"],
+      },
+    },
+    // ==========================================================
+    // INI BAGIAN BARU YANG KITA TAMBAHKAN
+    // ==========================================================
+    examples: {
+      RegisterExample: {
+        // Nama contoh untuk registrasi
+        value: {
+          fullname: "Budi Santoso",
+          username: "budisan",
+          email: "budi@example.com",
+          password: "PasswordSuperAman123!",
+        },
+        summary: "Contoh payload untuk registrasi",
+      },
+      LoginExample: {
+        // Nama contoh untuk login
+        value: {
+          email: "budi@example.com",
+          password: "PasswordSuperAman123!",
+        },
+        summary: "Contoh payload untuk login",
       },
     },
   },
 };
 
-// Pastikan path ini benar sesuai struktur foldermu
 const outputFile = "./swagger_output.json";
-const endpointsFiles = ["./src/routes/api.ts"]; // Contoh path yang umum
+const endpointsFiles = ["./src/routes/api.ts"]; // Sesuaikan path ini jika perlu
 
 swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);

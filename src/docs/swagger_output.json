@@ -1,18 +1,13 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "v0.0.1",
-    "title": "Dokumentasi API Fullstack Web",
-    "description": "Dokumentasi API untuk proyek belajar fullstack web."
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api",
-      "description": "Local Server"
-    },
-    {
-      "url": "https://belajar-fullstack-be.vercel.app/api",
-      "description": "Deployed Server"
+      "url": "http://localhost:3000/"
     }
   ],
   "paths": {
@@ -22,7 +17,7 @@
           "Auth"
         ],
         "summary": "Mendaftarkan Pengguna Baru",
-        "description": "Endpoint untuk membuat akun pengguna baru.",
+        "description": "",
         "responses": {
           "default": {
             "description": ""
@@ -37,7 +32,7 @@
           "Auth"
         ],
         "summary": "Login Pengguna",
-        "description": "Endpoint untuk autentikasi dan mendapatkan token.",
+        "description": "",
         "responses": {
           "default": {
             "description": ""
@@ -51,8 +46,7 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer",
-        "description": "Masukkan token JWT yang didapat setelah login"
+        "scheme": "bearer"
       }
     },
     "schemas": {
@@ -72,14 +66,6 @@
                   "type": {
                     "type": "string",
                     "example": "string"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "Email pengguna yang terdaftar."
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "user@example.com"
                   }
                 }
               },
@@ -89,27 +75,9 @@
                   "type": {
                     "type": "string",
                     "example": "string"
-                  },
-                  "description": {
-                    "type": "string",
-                    "example": "Password pengguna."
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "password123"
                   }
                 }
               }
-            }
-          },
-          "required": {
-            "type": "array",
-            "example": [
-              "email",
-              "password"
-            ],
-            "items": {
-              "type": "string"
             }
           }
         }
@@ -130,10 +98,6 @@
                   "type": {
                     "type": "string",
                     "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "Budi Santoso"
                   }
                 }
               },
@@ -143,10 +107,6 @@
                   "type": {
                     "type": "string",
                     "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "budisan"
                   }
                 }
               },
@@ -156,10 +116,6 @@
                   "type": {
                     "type": "string",
                     "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "budi@example.com"
                   }
                 }
               },
@@ -169,28 +125,30 @@
                   "type": {
                     "type": "string",
                     "example": "string"
-                  },
-                  "example": {
-                    "type": "string",
-                    "example": "PasswordSuperAman123!"
                   }
                 }
               }
             }
-          },
-          "required": {
-            "type": "array",
-            "example": [
-              "fullname",
-              "username",
-              "email",
-              "password"
-            ],
-            "items": {
-              "type": "string"
-            }
           }
         }
+      }
+    },
+    "examples": {
+      "RegisterExample": {
+        "value": {
+          "fullname": "Budi Santoso",
+          "username": "budisan",
+          "email": "budi@example.com",
+          "password": "PasswordSuperAman123!"
+        },
+        "summary": "Contoh payload untuk registrasi"
+      },
+      "LoginExample": {
+        "value": {
+          "email": "budi@example.com",
+          "password": "PasswordSuperAman123!"
+        },
+        "summary": "Contoh payload untuk login"
       }
     }
   }
