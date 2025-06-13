@@ -4,10 +4,19 @@ import swaggerAutogen from "swagger-autogen";
 
 const doc = {
   info: {
-    // ... (info tidak berubah)
+    version: "v0.0.1",
+    title: "Dokumentasi API Fullstack Web",
+    description: "Dokumentasi API untuk proyek belajar fullstack web.",
   },
   servers: [
-    // ... (servers tidak berubah)
+    {
+      url: "http://localhost:3000/api", // Sesuaikan port jika berbeda
+      description: "Local Server",
+    },
+    {
+      url: "https://belajar-fullstack-be.vercel.app/api", // Pastikan ini URL backend-mu
+      description: "Deployed Server",
+    },
   ],
   // Di dalam components, kita akan tambahkan blok "examples"
   components: {

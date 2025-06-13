@@ -1,13 +1,18 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
-    "title": "REST API",
-    "description": ""
+    "version": "v0.0.1",
+    "title": "Dokumentasi API Fullstack Web",
+    "description": "Dokumentasi API untuk proyek belajar fullstack web."
   },
   "servers": [
     {
-      "url": "http://localhost:3000/"
+      "url": "http://localhost:3000/api",
+      "description": "Local Server"
+    },
+    {
+      "url": "https://belajar-fullstack-be.vercel.app/api",
+      "description": "Deployed Server"
     }
   ],
   "paths": {
