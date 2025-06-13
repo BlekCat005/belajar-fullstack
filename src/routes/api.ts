@@ -36,7 +36,7 @@ router.post(
             "application/json": {
                 schema: { $ref: '#/components/schemas/LoginRequest' },
                 example: {
-                    email: "budi@example.com",
+                    identifier: "budi@example.com",
                     password: "PasswordSuperAman123!"
                 }
             }

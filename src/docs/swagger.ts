@@ -31,7 +31,7 @@ const doc = {
       LoginRequest: {
         type: "object",
         properties: {
-          email: { type: "string" },
+          identifier: { type: "string" },
           password: { type: "string" },
         },
       },

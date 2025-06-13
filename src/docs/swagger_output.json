@@ -66,7 +66,7 @@
                 "$ref": "#/components/schemas/LoginRequest"
               },
               "example": {
-                "email": "budi@example.com",
+                "identifier": "budi@example.com",
                 "password": "PasswordSuperAman123!"
               }
             }
@@ -93,7 +93,7 @@
           "properties": {
             "type": "object",
             "properties": {
-              "email": {
+              "identifier": {
                 "type": "object",
                 "properties": {
                   "type": {
