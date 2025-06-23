@@ -1,3 +1,4 @@
+// Fullstack Web - Copy/be-web/src/models/item.model.ts
 import mongoose, { Document } from "mongoose";
 import * as Yup from "yup";
 
@@ -14,7 +15,7 @@ export const itemDTO = Yup.object({
     .required("Stok tidak boleh kosong")
     .integer("Stok harus berupa angka bulat")
     .min(0, "Stok tidak boleh negatif"),
-  imageUrl: Yup.string().url("URL gambar tidak valid").optional(),
+  imageUrl: Yup.string().url("URL gambar tidak valid").optional().nullable(), // Menambahkan .nullable() untuk kasus imageUrl kosong
 });
 
 // TypeScript type yang diambil dari skema Yup
@@ -45,12 +46,16 @@ const ItemSchema = new Schema<Item>(
     },
     imageUrl: {
       type: Schema.Types.String,
+      default: null, // Set default to null if not provided
     },
   },
   {
     timestamps: true, // Otomatis menambahkan createdAt dan updatedAt
   }
 );
+
+// Tambahkan indeks teks di sini
+ItemSchema.index({ name: "text", description: "text" }); //
 
 const ItemModel = mongoose.model<Item>(ITEM_MODEL_NAME, ItemSchema);
 

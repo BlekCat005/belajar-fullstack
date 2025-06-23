@@ -1,3 +1,4 @@
+// Fullstack Web - Copy/be-web/src/utils/interfaces.ts
 import { Types } from "mongoose"; //
 import { User } from "../models/user.model"; //
 import { Request } from "express"; //
@@ -24,5 +25,5 @@ export interface IReqUser extends Request {
 export interface IPaginationQuery {
   page: number; //
   limit: number; //
-  search?: string; //
+  search?: string; // Menambahkan properti search opsional
 }

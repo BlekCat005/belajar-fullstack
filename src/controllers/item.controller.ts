@@ -1,3 +1,4 @@
+// Fullstack Web - Copy/be-web/src/controllers/item.controller.ts
 import { Request, Response } from "express";
 import ItemModel, { itemDTO, TypeItem } from "../models/item.model";
 import response from "../utils/response";
@@ -23,17 +24,18 @@ export default {
       const {
         limit = 10,
         page = 1,
-        search,
+        search, // Ambil parameter search dari query
       } = req.query as unknown as IPaginationQuery;
 
       const query: FilterQuery<TypeItem> = {};
 
       if (search) {
+        // Jika ada parameter search, tambahkan kondisi $or untuk mencari di name atau description
         Object.assign(query, {
-          ...query,
-          $text: {
-            $search: search,
-          },
+          $or: [
+            { name: { $regex: search, $options: "i" } }, // Cari di 'name' (case-insensitive)
+            { description: { $regex: search, $options: "i" } }, // Cari di 'description' (case-insensitive)
+          ],
         });
       }
       const result = await ItemModel.find(query)
@@ -51,7 +53,7 @@ export default {
           current: page,
           totalPages: Math.ceil(count / limit),
         },
-        "success find all banners"
+        "success find all items"
       );
     } catch (error) {
       response.error(res, error, "Gagal mendapatkan barang");

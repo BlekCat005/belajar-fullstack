@@ -128,33 +128,51 @@
         "tags": [
           "Items"
         ],
+        "summary": "Mendapatkan semua barang dengan paginasi dan pencarian",
         "description": "",
         "parameters": [
           {
-            "name": "limit",
+            "name": "page",
             "in": "query",
+            "description": "Nomor halaman",
+            "default": 1,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
-            "name": "page",
+            "name": "limit",
             "in": "query",
+            "description": "Jumlah item per halaman",
+            "default": 10,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           },
           {
             "name": "search",
             "in": "query",
+            "description": "Kata kunci pencarian (nama atau deskripsi barang)",
             "schema": {
               "type": "string"
             }
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Daftar barang berhasil diambil.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedItemResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedItemResponse"
+                }
+              }
+            }
           }
         },
         "security": [
@@ -225,7 +243,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ItemRequest"
+                "$ref": "#/components/schemas/CreateItemRequest"
               },
               "examples": {
                 "itemExample": {

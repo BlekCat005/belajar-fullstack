@@ -81,11 +81,33 @@ router.get(
   "/items",
   authMiddleware,
   itemController.getAll
-  /* 
+  /*
     #swagger.tags = ['Items']
+    #swagger.summary = 'Mendapatkan semua barang dengan paginasi dan pencarian'
     #swagger.security = [{
       "bearerAuth": []
     }]
+    #swagger.parameters['page'] = {
+        in: 'query',
+        description: 'Nomor halaman',
+        type: 'integer',
+        default: 1
+    }
+    #swagger.parameters['limit'] = {
+        in: 'query',
+        description: 'Jumlah item per halaman',
+        type: 'integer',
+        default: 10
+    }
+    #swagger.parameters['search'] = {
+        in: 'query',
+        description: 'Kata kunci pencarian (nama atau deskripsi barang)',
+        type: 'string'
+    }
+    #swagger.responses[200] = {
+        description: 'Daftar barang berhasil diambil.',
+        schema: { $ref: '#/components/schemas/PaginatedItemResponse' }
+    }
   */
 );
 
@@ -102,21 +124,24 @@ router.get(
 router.put(
   "/items/:id",
   authMiddleware,
-  itemController.update /* #swagger.tags = ['Items']
-    #swagger.summary = 'Memperbarui data barang'
-    #swagger.security = [{"bearerAuth": []}]
-    #swagger.parameters['id'] = { description: 'ID unik dari barang.' }
-    #swagger.requestBody = {
-      required: true,
-      content: {
-        "application/json": {
-          schema: { $ref: '#/components/schemas/ItemRequest' },
-          examples: {
-            itemExample: { $ref: '#/components/examples/ItemExample' }
-          }
-        }
-      }
-    }
+  itemController.update
+  /* #swagger.tags = ['Items']
+     #swagger.summary = 'Memperbarui data barang'
+     #swagger.security = [{
+       "bearerAuth": []
+     }]
+     #swagger.parameters['id'] = { description: 'ID unik dari barang.' }
+     #swagger.requestBody = {
+         required: true,
+         content: {
+             "application/json": {
+                 schema: { $ref: '#/components/schemas/CreateItemRequest' },
+                 examples: {
+                     itemExample: { $ref: '#/components/examples/ItemExample' }
+                 }
+             }
+         }
+     }
   */
 );
 
