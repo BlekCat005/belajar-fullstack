@@ -66,7 +66,7 @@ export default {
           current: page,
           totalPages: Math.ceil(count / limit),
         },
-        "success find all banners"
+        "Berhasil menampilkan semua barang"
       );
     } catch (error) {
       response.error(res, error, "Gagal mendapatkan barang");
