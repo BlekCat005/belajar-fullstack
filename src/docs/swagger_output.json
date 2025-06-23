@@ -128,7 +128,7 @@
         "tags": [
           "Items"
         ],
-        "summary": "Mendapatkan semua barang dengan paginasi dan pencarian",
+        "summary": "Mendapatkan semua barang dengan paginasi, pencarian, dan pengurutan",
         "description": "",
         "parameters": [
           {
@@ -153,6 +153,33 @@
             "name": "search",
             "in": "query",
             "description": "Kata kunci pencarian (nama atau deskripsi barang)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "Field untuk mengurutkan (contoh: name, price, stock, createdAt)",
+            "enum": [
+              "name",
+              "price",
+              "stock",
+              "createdAt"
+            ],
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "description": "Urutan pengurutan (asc atau desc)",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc",
             "schema": {
               "type": "string"
             }

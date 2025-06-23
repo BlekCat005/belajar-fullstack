@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import ItemModel, { itemDTO, TypeItem } from "../models/item.model";
 import response from "../utils/response";
 import { IPaginationQuery } from "../utils/interfaces";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, SortOrder } from "mongoose"; // Import SortOrder
 
 export default {
   // Membuat barang baru
@@ -24,24 +24,37 @@ export default {
       const {
         limit = 10,
         page = 1,
-        search, // Ambil parameter search dari query
+        search,
+        sortBy, // Ambil parameter sortBy
+        sortOrder = "desc", // Ambil parameter sortOrder, default ke 'desc'
       } = req.query as unknown as IPaginationQuery;
 
       const query: FilterQuery<TypeItem> = {};
 
       if (search) {
-        // Jika ada parameter search, tambahkan kondisi $or untuk mencari di name atau description
         Object.assign(query, {
           $or: [
-            { name: { $regex: search, $options: "i" } }, // Cari di 'name' (case-insensitive)
-            { description: { $regex: search, $options: "i" } }, // Cari di 'description' (case-insensitive)
+            { name: { $regex: search, $options: "i" } },
+            { description: { $regex: search, $options: "i" } },
           ],
         });
       }
+
+      // Objek untuk konfigurasi sort
+      const sort: { [key: string]: SortOrder } = {};
+
+      if (sortBy) {
+        // Jika sortBy diberikan, gunakan itu. Jika tidak, tetap gunakan createdAt.
+        sort[sortBy] = sortOrder;
+      } else {
+        // Default sort jika sortBy tidak diberikan
+        sort.createdAt = -1; // Urutkan berdasarkan tanggal pembuatan terbaru secara default
+      }
+
       const result = await ItemModel.find(query)
         .limit(limit)
         .skip((page - 1) * limit)
-        .sort({ createdAt: -1 })
+        .sort(sort) // Terapkan objek sort
         .exec();
       const count = await ItemModel.countDocuments(query);
 
@@ -53,7 +66,7 @@ export default {
           current: page,
           totalPages: Math.ceil(count / limit),
         },
-        "success find all items"
+        "success find all banners"
       );
     } catch (error) {
       response.error(res, error, "Gagal mendapatkan barang");

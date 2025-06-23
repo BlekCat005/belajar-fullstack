@@ -81,33 +81,45 @@ router.get(
   "/items",
   authMiddleware,
   itemController.getAll
-  /*
-    #swagger.tags = ['Items']
-    #swagger.summary = 'Mendapatkan semua barang dengan paginasi dan pencarian'
-    #swagger.security = [{
-      "bearerAuth": []
-    }]
-    #swagger.parameters['page'] = {
-        in: 'query',
-        description: 'Nomor halaman',
-        type: 'integer',
-        default: 1
-    }
-    #swagger.parameters['limit'] = {
-        in: 'query',
-        description: 'Jumlah item per halaman',
-        type: 'integer',
-        default: 10
-    }
-    #swagger.parameters['search'] = {
-        in: 'query',
-        description: 'Kata kunci pencarian (nama atau deskripsi barang)',
-        type: 'string'
-    }
-    #swagger.responses[200] = {
-        description: 'Daftar barang berhasil diambil.',
-        schema: { $ref: '#/components/schemas/PaginatedItemResponse' }
-    }
+  /* #swagger.tags = ['Items']
+     #swagger.summary = 'Mendapatkan semua barang dengan paginasi, pencarian, dan pengurutan'
+     #swagger.security = [{
+       "bearerAuth": []
+     }]
+     #swagger.parameters['page'] = {
+         in: 'query',
+         description: 'Nomor halaman',
+         type: 'integer',
+         default: 1
+     }
+     #swagger.parameters['limit'] = {
+         in: 'query',
+         description: 'Jumlah item per halaman',
+         type: 'integer',
+         default: 10
+     }
+     #swagger.parameters['search'] = {
+         in: 'query',
+         description: 'Kata kunci pencarian (nama atau deskripsi barang)',
+         type: 'string'
+     }
+     #swagger.parameters['sortBy'] = {
+         in: 'query',
+         description: 'Field untuk mengurutkan (contoh: name, price, stock, createdAt)',
+         type: 'string',
+         enum: ['name', 'price', 'stock', 'createdAt']
+     }
+     #swagger.parameters['sortOrder'] = {
+         in: 'query',
+         description: 'Urutan pengurutan (asc atau desc)',
+         type: 'string',
+         enum: ['asc', 'desc'],
+         default: 'desc'
+     }
+     #swagger.responses[200] = {
+         description: 'Daftar barang berhasil diambil.',
+         schema: { $ref: '#/components/schemas/PaginatedItemResponse' }
+     }
   */
 );
 
